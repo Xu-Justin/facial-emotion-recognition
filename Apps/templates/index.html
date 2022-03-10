@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="card" style="width: 50rem;">
+    <div class="card-body">
+        <h5 class="card-title mb-3 mt-3">Facial Emotion Recognition</h5>
+        <p class="card-text">Upload an image to be processed (.jpg, .jpeg)</p>
+
+        <form action="{{ url_for('index') }}" method="POST" enctype="multipart/form-data">
+            <div class="form-group mb-3">
+                <input type="file" class="form-control-file" name="image">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
