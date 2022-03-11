@@ -95,7 +95,7 @@ args = parser.parse_args()
 def main():
 
     PATH_DATASET = args.PATH_DATASET
-    PATH_MODEL_WEIGHT = args.MODEL_WEIGHT
+    PATH_MODEL_WEIGHT = args.PATH_MODEL_WEIGHT
     BATCH_SIZE = args.BATCH_SIZE
     CPU_ONLY = args.CPU_ONLY
 
