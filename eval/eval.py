@@ -14,6 +14,7 @@ class Dataset():
     image_shape = (224, 224)
     
     base_transform = transforms.Compose([
+        transforms.Grayscale(3),
         transforms.Resize(image_shape),
         transforms.ToTensor(),
         transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
@@ -23,7 +24,6 @@ class Dataset():
         transforms.Grayscale(3),
         transforms.RandomEqualize(),
         transforms.RandomHorizontalFlip(),
-        transforms.RandomResizedCrop(image_shape),
         transforms.RandomAffine(0, translate = (0.2, 0.2)),
         transforms.RandomRotation(20),
         

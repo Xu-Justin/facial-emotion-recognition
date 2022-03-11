@@ -9,13 +9,9 @@ from torchvision import transforms, models
 from flask import Flask, render_template, request, redirect, url_for, json
 from PIL import Image
 
-CPU_ONLY = False
 PATH_MODEL_WEIGHT = './resources/model_weight/weight.zip'
 
-if(CPU_ONLY):
-    device = torch.device('cpu')
-else:
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(f"Device : {device}")
 
 if(device.type == 'cuda'):
@@ -46,13 +42,14 @@ labels = {0: 'angry', 1: 'disgust', 2: 'fear', 3: 'happy', 4: 'neutral', 5: 'sad
 
 image_shape = (224, 224)
 transform = transforms.Compose([
+    transforms.Grayscale(3),
     transforms.Resize(image_shape),
     transforms.ToTensor(),
     transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
 ])
 
-def init_model():
-    model = models.vgg16(pretrained=True)
+def init_model(pretrained=True):
+    model = models.vgg16(pretrained=pretrained)
     model.classifier[6] = nn.Linear(4096, 7)
     return model
 
@@ -60,7 +57,7 @@ def load_weight(model, path):
     model.load_state_dict(torch.load(path))
     print(f"Loaded model weight from {path}")
 
-model = init_model()
+model = init_model(pretrained=False)
 load_weight(model, PATH_MODEL_WEIGHT)
 model.to(device)
 
@@ -128,8 +125,8 @@ def index():
 
 @app.route('/result', methods=['GET'])
 def display():
-    print(f"Labels : {LABELS}")
-    print(f"Logits: {DATA}")
+    # print(f"Labels : {LABELS}")
+    # print(f"Logits: {DATA}")
     return render_template('display.html', data=DATA, labels=LABELS)
 
 if __name__ == '__main__':

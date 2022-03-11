@@ -21,9 +21,8 @@ class Dataset():
         transforms.Grayscale(3),
         transforms.RandomEqualize(),
         transforms.RandomHorizontalFlip(),
-        # transforms.RandomResizedCrop(image_shape),
-        # transforms.RandomAffine(0, translate = (0.2, 0.2)),
-        # transforms.RandomRotation(20),
+        transforms.RandomAffine(0, translate = (0.2, 0.2)),
+        transforms.RandomRotation(20),
         
         transforms.Resize(image_shape),
         transforms.ToTensor(),
