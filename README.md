@@ -1,12 +1,21 @@
 # facial-emotion-recognition
 
+[![Repo](https://badgen.net/badge/icon/GitHub?icon=github&label)](https://github.com/Xu-Justin/facial-emotion-recognition)
+
+The program will receive an image and recognize expression of detected faces in the images.
+
 ## Dataset
 
-Dataset is available on [Kaggle](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data) and can be downloaded through the following command.
+Dataset is available on [Kaggle](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data). Run `generate_dataset.py` to download and extract the dataset.
 
-```
-$ kaggle competitions download -c challenges-in-representation-learning-facial-expression-recognition-challenge
-```
+## Docker
+
+Docker images are available at [Docker Hub](https://hub.docker.com/repository/docker/jstnxu/facial-emotion-recognition/tags).
+
+Read `README` file from the following links for more details on how to `build`, `pull`, or `run` the image.
+
+ * [`face-detection:apps`](argparse/README.md)
+ * [`face-detection:train`](flask/README.md)
 
 ## References
 
