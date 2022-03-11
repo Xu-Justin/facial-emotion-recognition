@@ -6,7 +6,9 @@ The program will receive an image and recognize expression of detected faces in 
 
 ## Dataset
 
-Dataset is available on [Kaggle](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data). Run `generate_dataset.py` to download and extract the dataset.
+This project use dataset from Challenges in Representation Learning: Facial Expression Recognition Challenge (aka. FER2013). The dataset is available on [Kaggle](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge/data).
+
+Run `generate_dataset.py` to download and extract the dataset.
 
 ## Docker
 
