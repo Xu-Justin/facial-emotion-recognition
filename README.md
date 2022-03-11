@@ -14,8 +14,8 @@ Docker images are available at [Docker Hub](https://hub.docker.com/repository/do
 
 Read `README` file from the following links for more details on how to `build`, `pull`, or `run` the image.
 
- * [`face-detection:apps`](argparse/README.md)
- * [`face-detection:train`](flask/README.md)
+ * [`face-detection:apps`](Apps/README.md)
+ * [`face-detection:train`](train/README.md)
 
 ## References
 
