@@ -51,8 +51,8 @@ class Dataset():
     def init_testloader(self, path):
         self.testloader = self.loader(path, self.batch_size)
 
-def init_model():
-    model = models.vgg16(pretrained=True)
+def init_model(pretrained=True):
+    model = models.vgg16(pretrained=pretrained)
     model.classifier[6] = nn.Linear(4096, 7)
     return model
 
@@ -123,9 +123,11 @@ def main():
        torch.cuda.empty_cache()
 
     # MODEL
-    model = init_model()
     if(PATH_MODEL_WEIGHT is not None):
+        model = init_model(pretrained=False)
         load_weight(model, PATH_MODEL_WEIGHT)
+    else:
+        model = init_model()
     model.to(device)
 
     print()
