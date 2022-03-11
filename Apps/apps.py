@@ -9,6 +9,18 @@ from torchvision import transforms, models
 from flask import Flask, render_template, request, redirect, url_for, json
 from PIL import Image
 
+CPU_ONLY = False
+PATH_MODEL_WEIGHT = './resources/model_weight/weight.zip'
+
+if(CPU_ONLY):
+    device = torch.device('cpu')
+else:
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(f"Device : {device}")
+
+if(device.type == 'cuda'):
+    torch.cuda.empty_cache()
+
 class Haardcascade:
     cascade = 'resources/haarcascade/haarcascade_frontalface_default.xml'
     face_cascade = cv2.CascadeClassifier(cascade)  
@@ -22,13 +34,12 @@ class Haardcascade:
     @classmethod
     def detect(cls, image_bgr):
         gray_image = cls.preprocess(image_bgr)
-        bounding_boxes = cls.face_cascade.detectMultiScale(gray_image, 1.3, 5)
+        bounding_boxes = cls.face_cascade.detectMultiScale(gray_image, 1.05, 3)
         return bounding_boxes
 
 PATH_SOURCE = './static/source.jpg'
 PATH_PREDICT = './static/result.jpg'
 PATH_CROP = './static/crop.jpg'
-PATH_MODEL_WEIGHT = './resources/model_weight/weight.zip'
 
 emotions = {'angry': 0, 'disgust': 1, 'fear': 2, 'happy': 3, 'neutral': 4, 'sad': 5, 'surprise': 6}
 labels = {0: 'angry', 1: 'disgust', 2: 'fear', 3: 'happy', 4: 'neutral', 5: 'sad', 6: 'surprise'}
@@ -51,6 +62,7 @@ def load_weight(model, path):
 
 model = init_model()
 load_weight(model, PATH_MODEL_WEIGHT)
+model.to(device)
 
 LABELS = json.dumps( list(emotions) )
 DATA = None
@@ -92,12 +104,13 @@ def process():
     del x, y, w, h
 
     # Predict logits
-    image = Image.open('static/crop.png')
+    image = Image.open(PATH_CROP)
     image = transform(image)
+    image = image.to(device)
     logits = model(image.view(1, image.shape[0], image.shape[1], image.shape[2]))[0]
     pred = F.softmax(logits)
     global DATA
-    DATA = json.dumps( list(pred.numpy().astype('float')) )
+    DATA = json.dumps( list(pred.data.cpu().numpy().astype('float')) )
 
 # ======================================================================
 
@@ -121,5 +134,5 @@ def display():
 
 if __name__ == '__main__':
     os.makedirs('static', exist_ok=True)
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000)
     shutil.rmtree('static')

@@ -11,6 +11,7 @@ class Dataset():
     image_shape = (224, 224)
     
     base_transform = transforms.Compose([
+        transforms.Grayscale(3),
         transforms.Resize(image_shape),
         transforms.ToTensor(),
         transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
@@ -20,9 +21,9 @@ class Dataset():
         transforms.Grayscale(3),
         transforms.RandomEqualize(),
         transforms.RandomHorizontalFlip(),
-        transforms.RandomResizedCrop(image_shape),
-        transforms.RandomAffine(0, translate = (0.2, 0.2)),
-        transforms.RandomRotation(20),
+        # transforms.RandomResizedCrop(image_shape),
+        # transforms.RandomAffine(0, translate = (0.2, 0.2)),
+        # transforms.RandomRotation(20),
         
         transforms.Resize(image_shape),
         transforms.ToTensor(),
@@ -181,6 +182,7 @@ def main():
             for param in model.features.parameters():
                 param.requires_grad = False
 
+            # optimizer = torch.optim.Adam(model.classifier.parameters(), lr=1e-3)
             optimizer = torch.optim.SGD(model.classifier.parameters(), lr=1e-3, momentum=0.9, nesterov=True, weight_decay=0.0001)
             scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.75)
 
@@ -188,6 +190,7 @@ def main():
             for param in model.features.parameters():
                 param.requires_grad = True
 
+            # optimizer = torch.optim.Adam(model.parameters(), lr=1e-5)
             optimizer = torch.optim.SGD(model.parameters(), lr=1e-5, momentum=0.9, nesterov=True, weight_decay=0.0001)
             scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.75, verbose=True)
 
