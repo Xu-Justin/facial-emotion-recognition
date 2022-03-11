@@ -3,7 +3,7 @@
 ## Build Image
 
 ```
-$ ddocker build -t jstnxu/facial-emotion-recognition:apps .
+$ docker build -t jstnxu/facial-emotion-recognition:apps .
 ```
 
 ## Pull Image from Docker Hub
