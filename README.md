@@ -1,6 +1,6 @@
 # facial-emotion-recognition
 
-[![Repo](https://badgen.net/badge/icon/GitHub?icon=github&label)](https://github.com/Xu-Justin/facial-emotion-recognition)
+[![Repo](https://badgen.net/badge/icon/GitHub?icon=github&label)](https://github.com/Xu-Justin/facial-emotion-recognition) [![Docker](https://badgen.net/badge/icon/Docker%20Hub?icon=docker&label)](https://hub.docker.com/repository/docker/jstnxu/facial-emotion-recognition/tags)
 
 The program will receive an image and recognize expression of detected faces in the images.
 
